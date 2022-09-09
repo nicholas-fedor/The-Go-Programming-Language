@@ -1,0 +1,28 @@
+# Study Notes
+
+## Initial Attempt
+* Initially setup the package as gopls.io/ch2/tempconv0 with the celsius.go file named main.go.
+
+## Initial Results
+* After initially transcribing the code on page 39, there were errors due to the missing use of the "fmt" package and no "main" function.
+
+## Attempted debugging
+* Attempted to include all of the operations from page 40, with the "print" function calls in a "main" function; however, this didn't seem correct.
+* Attempted to refactor the code to a new "main.go" file and rename the existing "main.go" file to tempconv0; however, this also didn't seem correct.
+
+## Solution Review
+Located and reviewed the example code on the book's github repo, located here: https://github.com/adonovan/gopl.io/tree/master/ch2/tempconv0
+* The original file name (main.go) renamed to celsius.go.
+* The function "func (c Celsius) ... " is added at the bottom of "celsius.go" as the function that calls the "fmt" function.
+* The additional lines of code are used in a new file "tempconv_test.go" to help test "celsius.go".
+* Within the files, there are comments that use syntax, such as "!+" and "!-" in "celsius.go"; and "!+arith" and "!-arith" in "tempconv_test.go" that appear to be used by Go's test module.
+* In Go's testing module, the "Output: [...]" comment syntax is used to enforce expected outputs when testing.
+
+## Learning Outcomes
+* First line of comments in code, before the package descriptor, should be the page number.
+* The book may segment code and require the use of a test file when creating packages that aren't "main".
+* Further learning of Go Testing will be beneficial.
+* Didn't find any definitive documentation regarding the "!+" and etc comment syntax.
+    - This is something to look for in further reading.
+* Comments within Go are functional extensions of the code, including when testing and debugging.
+* I haven't been doing the "end of chapter subsection" exercises, which might be a good place to focus.
