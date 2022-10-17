@@ -18,6 +18,9 @@ func TestNonPalindrome(t *testing.T) {
 	}
 }
 
+
+// The tests below are expected to fail.
+// See package gopl.io/ch11/word2 for the fix.
 func TestFrenchPalindrome(t *testing.T) {
 	if !IsPalindrome("été") {
 		t.Error(`IsPalindrome("été") = false`)
