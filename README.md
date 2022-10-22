@@ -12,6 +12,10 @@ Code examples from the book.
 
 <https://github.com/adonovan/gopl.io/tree/master/>
 
+## Exercise Solutions
+
+https://github.com/torbiak/gopl/blob/master/
+
 ## Notes
 
-* Code from the author's repo has comments that include "//!+" and "//!-". These comments bracket the parts of hte programs that are from the book.
+* Code from the author's repo has comments that include "//!+" and "//!-". These comments bracket the parts of the programs that are from the book.
