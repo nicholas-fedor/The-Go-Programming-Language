@@ -1,5 +1,6 @@
 // See page 13
 
+// Prompt:
 // Modify dup2 to print the names of all files in which each duplicate line occurs.
 
 // Dup2 prints the count and text of lines that appear more than once in the input.
