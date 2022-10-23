@@ -8,7 +8,7 @@ import (
 	"log"
 	"os"
 
-	"gopl.io/ch4/github"
+	"gopl.io/example-problems/ch4/github"
 )
 
 func main() {

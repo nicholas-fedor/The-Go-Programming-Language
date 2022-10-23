@@ -20,7 +20,7 @@ import (
 	"math"
 	"net/http"
 
-	"gopl.io/ch7/eval"
+	"gopl.io/example-problems/ch7/eval"
 )
 
 // -- copied from gopl.io/ch3/surface

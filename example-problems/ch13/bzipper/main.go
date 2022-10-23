@@ -8,7 +8,7 @@ import (
 	"log"
 	"os"
 
-	"gopl.io/ch13/bzip"
+	"gopl.io/example-problems/ch13/bzip"
 )
 
 func main() {

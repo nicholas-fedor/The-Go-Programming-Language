@@ -4,7 +4,7 @@ import (
 	"sync"
 	"testing"
 
-	bank "gopl.io/ch9/bank1"
+	bank "gopl.io/example-problems/ch9/bank1"
 )
 
 func TestBank(t *testing.T) {

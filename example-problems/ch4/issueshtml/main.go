@@ -9,7 +9,7 @@ import (
 	"log"
 	"os"
 
-	"gopl.io/ch4/github"
+	"gopl.io/example-problems/ch4/github"
 )
 
 var issueList = template.Must(template.New("issuelist").Parse(`

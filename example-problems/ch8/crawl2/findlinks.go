@@ -12,7 +12,7 @@ import (
 	"log"
 	"os"
 
-	"gopl.io/ch5/links"
+	"gopl.io/example-problems/ch5/links"
 )
 
 //!+sema

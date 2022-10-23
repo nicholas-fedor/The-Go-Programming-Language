@@ -8,7 +8,7 @@ import (
 	"os"
 	"sync"
 
-	"gopl.io/ch8/thumbnail"
+	"gopl.io/example-problems/ch8/thumbnail"
 )
 
 //!+1

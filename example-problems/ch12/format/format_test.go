@@ -7,7 +7,7 @@ import (
 	"testing"
 	"time"
 
-	"gopl.io/ch12/format"
+	"gopl.io/example-problems/ch12/format"
 )
 
 func Test(t *testing.T) {

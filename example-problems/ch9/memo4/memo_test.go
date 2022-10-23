@@ -3,8 +3,8 @@ package memo_test
 import (
 	"testing"
 
-	memo "gopl.io/ch9/memo4"
-	"gopl.io/ch9/memotest"
+	memo "gopl.io/example-problems/ch9/memo4"
+	"gopl.io/example-problems/ch9/memotest"
 )
 
 var httpGetBody = memotest.HTTPGetBody

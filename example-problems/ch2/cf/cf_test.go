@@ -2,7 +2,7 @@ package main
 
 import (
 	"fmt"
-	"gopl.io/ch2/tempconv"
+	"gopl.io/example-problems/ch2/tempconv"
 )
 
 func Example_one() {

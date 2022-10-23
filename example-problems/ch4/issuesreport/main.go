@@ -9,7 +9,7 @@ import (
 	"text/template"
 	"time"
 
-	"gopl.io/ch4/github"
+	"gopl.io/example-problems/ch4/github"
 )
 
 //!+template

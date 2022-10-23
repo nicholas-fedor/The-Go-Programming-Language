@@ -7,7 +7,7 @@ import (
 	"flag"
 	"fmt"
 
-	"gopl.io/ch7/tempconv"
+	"gopl.io/example-problems/ch7/tempconv"
 )
 
 var temp = tempconv.CelsiusFlag("temp", 20.0, "the temperature")

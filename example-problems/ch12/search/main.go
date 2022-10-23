@@ -8,7 +8,7 @@ import (
 	"log"
 	"net/http"
 
-	"gopl.io/ch12/params"
+	"gopl.io/example-problems/ch12/params"
 )
 
 // search implements the /search URL endpoint.

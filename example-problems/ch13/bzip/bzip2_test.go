@@ -6,7 +6,7 @@ import (
 	"io"
 	"testing"
 
-	"gopl.io/ch13/bzip"
+	"gopl.io/example-problems/ch13/bzip"
 )
 
 func TestBzip2(t *testing.T) {
