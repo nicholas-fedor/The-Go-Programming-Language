@@ -14,7 +14,7 @@ Code examples from the book.
 
 ## Exercise Solutions
 
-<https://github.com/torbiak/gopl/blob/master/>
+<https://github.com/torbiak/gopl>
 
 ## Notes
 
