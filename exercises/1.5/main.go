@@ -1,6 +1,7 @@
-// See page 15
+// Exercise 1.5
+// Page 15
 
-// Prompt: 
+// Prompt:
 // Change the Lissajous program's color palette to green on black,
 // for added authenticity.
 // To create the web color #RRGGBB, use color.RGBA{0xRR, 0xGG, 0xBB, 0xFF},
@@ -22,7 +23,7 @@ import (
 
 // Changed to reference color.Black as index 0
 // and green via color.RGBA{0, 255, 0, 255} as index 1
-var palette = []color.Color{color.Black, color.RGBA{0, 255, 0, 255}}
+var palette = []color.Color{color.Black, color.RGBA{G: 255, A: 255}}
 
 const (
 	blackIndex = 0 // first color in palette
@@ -56,5 +57,8 @@ func lissajous(out io.Writer) {
 		anim.Delay = append(anim.Delay, delay)
 		anim.Image = append(anim.Image, img)
 	}
-	gif.EncodeAll(out, &anim) // Note: ignoring encoding errors
+	err := gif.EncodeAll(out, &anim)
+	if err != nil {
+		return
+	} // Note: ignoring encoding errors
 }

@@ -1,4 +1,5 @@
-// See page 8
+// Exercise 1.1
+// Page 8
 
 // Prompt:
 // Modify the echo program to also print os.Args[0],

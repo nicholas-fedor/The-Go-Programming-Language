@@ -1,4 +1,5 @@
-// See page 13
+// Exercise 1.4
+// Page 13
 
 // Prompt:
 // Modify dup2 to print the names of all files in which each duplicate line occurs.
