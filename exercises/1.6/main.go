@@ -21,14 +21,6 @@ import (
 	"os"
 )
 
-// Exercise: Add additional colors.
-var palette = []color.Color{
-	color.White,
-	color.Black,
-	color.RGBA{R: 0xFF, A: 0xFF}, // red
-	color.RGBA{G: 0xFF, A: 0xFF}, // green
-}
-
 func main() {
 	// Added file I/O, in lieu of invoking in the terminal.
 	// If the file doesn't exist, create it, or append to the file.
@@ -37,7 +29,7 @@ func main() {
 		log.Fatal(err)
 	}
 	defer f.Close()
-	
+
 	lissajous(f)
 }
 
@@ -49,6 +41,16 @@ func lissajous(out io.Writer) {
 		nframes = 64    // number of animation frames
 		delay   = 8     // delay between frames in 10ms units
 	)
+
+	// Copied from https://github.com/torbiak/gopl/blob/master/ex1.6/main.go.
+	palette := make([]color.Color, 0, nframes)
+	palette = append(palette, color.RGBA{0, 0, 0, 255})
+	for i := 0; i < nframes; i++ {
+		scale := float64(i) / float64(nframes)
+		c := color.RGBA{uint8(55 + 200*scale), uint8(55 + 200*scale), uint8(55 + 200*scale), 255}
+		palette = append(palette, c)
+	}
+
 	freq := rand.Float64() * 3.0 // relative frequency of y oscillator
 	anim := gif.GIF{LoopCount: nframes}
 	phase := 0.0 // phase difference
@@ -58,12 +60,8 @@ func lissajous(out io.Writer) {
 		for t := 0.0; t < cycles*2*math.Pi; t += res {
 			x := math.Sin(t)
 			y := math.Sin(t*freq + phase)
-
-			paletteIndex := rand.Intn(len(palette)-1) + 1
-			// Exercise: Change third argument to show additional colors.
-			// SetColorIndex is used to set the pixel color at the specified
-			// (x, y) coordinate and then the third argument is the color value.
-			img.SetColorIndex(size+int(x*size+0.5), size+int(y*size+0.5), uint8(paletteIndex))
+			paletteIndex := uint8(i%(len(palette)-1) + 1)
+			img.SetColorIndex(size+int(x*size+0.5), size+int(y*size+0.5), paletteIndex)
 		}
 		phase += 0.1
 		anim.Delay = append(anim.Delay, delay)
