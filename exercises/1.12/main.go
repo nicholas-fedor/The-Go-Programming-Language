@@ -1,15 +1,24 @@
-// Exercise 1.6
-// Page 15
+// Exercise 1.12
+// Page 22
+//
+// Modify the Lissajous server to read parameter values from the URL.
+// For example, you might arrange it so that a URL like
+// http://localhost:8000/?cycles=20 sets the number of cycles to 20
+// instead of the default 5.
+// Use strconv.Atoi function to convert the string parameter into an
+// integer.
+// You can see its documentation with the command:
+// go doc strconv.Atoi
 
-// Prompt:
-// Modify the Lissajous program to produce images in multiple colors
-// by adding more values to palette and then displaying them by
-// changing the third argument of Set-ColorIndex in some
-// interesting way.
+// Results:
+// Used solution from https://github.com/torbiak/gopl/blob/master/ex1.12/main.go
+// Split handler function.
 
+// Lissajous server displays the Lissajous GIF via a web server.
 package main
 
 import (
+	"fmt"
 	"image"
 	"image/color"
 	"image/gif"
@@ -17,29 +26,38 @@ import (
 	"log"
 	"math"
 	"math/rand"
-	"os"
+	"net/http"
+	"strconv"
 	"time"
 )
 
 func main() {
-	// Added file I/O, in lieu of invoking in the terminal.
-	// If the file doesn't exist, create it, or append to the file.
-	f, err := os.OpenFile("lissajous.gif", os.O_APPEND|os.O_CREATE|os.O_WRONLY, 0644)
-	if err != nil {
-		log.Fatal(err)
-	}
-	defer f.Close()
+	http.HandleFunc("/", handler)
+	log.Fatal(http.ListenAndServe("localhost:8000", nil))
+}
 
-	lissajous(f)
+func handler(w http.ResponseWriter, r *http.Request) {
+	// Default of 5 x-oscillator revolutions unless specified via URL query.
+	var cycles = 5
+	cyclesStr := r.FormValue("cycles")
+	if cyclesStr != "" {
+		var err error
+		cycles, err = strconv.Atoi(cyclesStr)
+		if err != nil {
+			fmt.Fprintf(w, "Error: Incorrect cycles parameter: %s", err)
+			return
+		}
+	}
+
+	lissajous(cycles, w)
 }
 
 // Lissajous generates a random lissajous GIF.
-func lissajous(out io.Writer) {
+func lissajous(cycles int, out io.Writer) {
 	// Image sequence is deterministic unless rand is seeded with the time.
 	rand.Seed(time.Now().UTC().UnixNano())
-
+	
 	const (
-		cycles  = 5     // the number of complete x oscillator revolutions
 		res     = 0.001 // angular resolution
 		size    = 250   // image canvas covers [-size..+size]
 		nframes = 64    // number of animation frames
@@ -68,7 +86,7 @@ func lissajous(out io.Writer) {
 		for t := 0.0; t < float64(cycles)*2*math.Pi; t += res {
 			x := math.Sin(t)
 			y := math.Sin(t*freq + phase)
-			paletteIndex := uint8(len(palette) - 1)
+			paletteIndex := uint8(len(palette)-1)
 			img.SetColorIndex(size+int(x*size+0.5), size+int(y*size+0.5), paletteIndex)
 		}
 		phase += 0.1
