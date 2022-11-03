@@ -1,4 +1,13 @@
-// Surface computes an SVG rendering of a 3-D surface function.
+// Exercise 3.1
+// Page 60
+//
+// Prompt:
+// If the function f returns a non-finite float64 value,
+// the SVG file will contain invalid <polygon> elements
+// (although many SVG renderers handle this gracefully).
+// Modify the program to skip invalid polygons.
+
+// Surface computes an SVG rendering of a 3-D surface.
 package main
 
 import (
@@ -7,7 +16,7 @@ import (
 )
 
 const (
-	width, height = 600, 320            // canvas size in pixels
+	width, height = 600, 320            // canvase size in pixels
 	cells         = 100                 // number of grid cells
 	xyrange       = 30.0                // axis ranges (-xyrange..+xyrange)
 	xyscale       = width / 2 / xyrange // pixels per x or y unit
@@ -27,28 +36,46 @@ func main() {
 			bx, by := corner(i, j)
 			cx, cy := corner(i, j+1)
 			dx, dy := corner(i+1, j+1)
-			fmt.Printf("<polygon points='%g,%g %g,%g %g,%g %g,%g '/>\n",
-				ax, ay, bx, by, cx, cy, dx, dy)
+
+			// Prints polygons if points are valid numbers.
+			if isFinite(ax) && isFinite(ay) &&
+				isFinite(bx) && isFinite(by) &&
+				isFinite(cx) && isFinite(cy) &&
+				isFinite(dx) && isFinite(dy) {
+				fmt.Printf("<polygon points='%g, %g, %g, %g, %g, %g, %g, %g '/>\n",
+					ax, ay, bx, by, cx, cy, dx, dy)
+			}
 		}
 	}
 	fmt.Println("</svg>")
 }
 
 func corner(i, j int) (float64, float64) {
-	// Find point (x, y) at corner of cell (i,j).
+	// Find point (x, y) at corner of cell (i, j).
 	x := xyrange * (float64(i)/cells - 0.5)
 	y := xyrange * (float64(j)/cells - 0.5)
 
 	// Compute surface height z.
 	z := f(x, y)
 
-	// Project (x,y,z) isometrically onto a 2-D SVG canvas (sx,sy).
+	// Project (x, y, z) isometrically onto a 2-D SVG canvas (sx, sy).
 	sx := width/2 + (x-y)*cos30*xyscale
 	sy := height/2 + (x+y)*sin30*xyscale - z*zscale
 	return sx, sy
 }
 
 func f(x, y float64) float64 {
-	r := math.Hypot(x, y) // distance from (0,0)
+	r := math.Hypot(x, y) // distance from (0, 0)
 	return math.Sin(r)    // r
+}
+
+// isFinite returns true if values are not invalid or infinite numbers.
+func isFinite(f float64) bool {
+	if math.IsInf(f, 0) {
+		return false
+	}
+	if math.IsNaN(f) {
+		return false
+	}
+	return true
 }
