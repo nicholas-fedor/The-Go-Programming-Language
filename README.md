@@ -16,7 +16,7 @@ Code examples from the book.
 
 <https://github.com/torbiak/gopl>
 <https://github.com/Julineo/golang1training/>
-<https://github.com/Julineo/golang1training>
+<https://github.com/kdama/gopl>
 
 ## Notes
 
