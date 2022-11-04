@@ -1,0 +1,13 @@
+Used solution from: 
+https://github.com/torbiak/gopl/blob/master/ex2.5/popcount_test.go
+
+Benchmark Output: 
+Running tool: /usr/local/go/bin/go test -benchmem -run=^$ -bench ^BenchmarkPopCount$ gopl.io/exercises/ch2/2.5
+
+goos: linux
+goarch: amd64
+pkg: gopl.io/exercises/ch2/2.5
+cpu: AMD Ryzen Threadripper 2950X 16-Core Processor 
+BenchmarkPopCount-32    	100000000	        11.71 ns/op	       0 B/op	       0 allocs/op
+PASS
+ok  	gopl.io/exercises/ch2/2.5	1.189s

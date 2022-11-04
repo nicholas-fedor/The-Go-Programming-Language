@@ -1,0 +1,19 @@
+Solution copied from:
+https://github.com/kdama/gopl/blob/master/ch03/ex03/main.go
+This implements the use of a function to combine isNaN and isInf.
+
+https://github.com/torbiak/gopl/blob/master/ex3.1/main.go
+Implements isNaN directly in the main function and strings together for all the variables.
+This doesn't account for infinite values.
+This does run the checks after computing all of the values.
+
+https://github.com/Julineo/golang1training/blob/master/3/3.1/main.go
+Implements both isNaN and isInf.
+Checks for the variables are immediately after executing the corner func.
+
+Program execution:
+go run main.go >> surface.svg
+* Saves to a html file that can be opened via a web browser.
+
+Additional optimization/improvements can be achieved via things, such as refactoring the main function to handle i/o, 
+while the image generation is done via a separate surface function.

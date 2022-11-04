@@ -1,0 +1,15 @@
+Copied solution from: 
+https://github.com/torbiak/gopl/blob/master/ex2.4/popcount_test.go
+
+Benchmark Results:
+Running tool: /usr/local/go/bin/go test -benchmem -run=^$ -coverprofile=/tmp/vscode-gohtXnTp/go-code-cover -bench . gopl.io/exercises/ch2/2.4
+
+goos: linux
+goarch: amd64
+pkg: gopl.io/exercises/ch2/2.4
+cpu: AMD Ryzen Threadripper 2950X 16-Core Processor 
+BenchmarkTable-32         	1000000000	         0.2443 ns/op	       0 B/op	       0 allocs/op
+BenchmarkTableShift-32    	18545464	        66.11 ns/op	       0 B/op	       0 allocs/op
+PASS
+coverage: 100.0% of statements
+ok  	gopl.io/exercises/ch2/2.4	1.573s
