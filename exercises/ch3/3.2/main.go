@@ -12,7 +12,6 @@ package main
 import (
 	"fmt"
 	"io"
-	"log"
 	"math"
 	"net/http"
 )
@@ -33,7 +32,11 @@ type zFunc func(x, y float64) float64
 
 func main() {
 	http.HandleFunc("/", handler)
-	log.Fatal(http.ListenAndServe("localhost:3000", nil))
+	err := http.ListenAndServe("localhost:3000", nil)
+	if err != nil {
+		return
+	}
+
 }
 
 // handler takes the http request and generates an output.
@@ -45,20 +48,23 @@ func handler(w http.ResponseWriter, r *http.Request) {
 	switch r.FormValue("visualization") {
 	// "localhost:3000?visualization=eggbox"
 	case "eggbox":
-		fmt.Println("eggbox")
+		fmt.Println("Outputting eggbox svg")
 		printSVG(w, eggbox)
 	// "localhost:3000?visualization=moguls"
 	case "moguls":
-		fmt.Println("moguls")
+		fmt.Println("Outputting moguls svg")
 		printSVG(w, moguls)
 	// "localhost:3000?visualization=saddle"
 	case "saddle":
-		fmt.Println("saddle")
+		fmt.Println("Outputting saddle svg")
 		printSVG(w, saddle)
-	// "localhost:3000" defaults to original surface plot of sin(r)/r
-	default:
-		fmt.Println("default")
+	// "localhost:3000?visualization=original" defaults to original surface plot of sin(r)/r
+	case "original":
+		fmt.Println("Outputting original svg")
 		printSVG(w, defaultF)
+	default:
+		w.Header().Set("Content-Type", "text/html")
+		fmt.Fprintf(w, "<div><h1>Home</h1><h2>Use the ?visualization= html form request to access eggbox, moguls, saddle, or original svg options.</h2></div>")
 	}
 }
 
@@ -88,7 +94,7 @@ func printSVG(out io.Writer, r zFunc) {
 	fmt.Fprintln(out, "</svg>")
 }
 
-// corner translates 3-d coordinates to 2-d. 
+// corner translates 3-d coordinates to 2-d.
 // variable r represents the function used for generating x, y inputs.
 func corner(i, j int, r zFunc) (float64, float64) {
 	// Find point (x, y) at corner of cell (i, j).
