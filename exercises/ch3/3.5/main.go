@@ -26,8 +26,10 @@ const (
 
 // Mandelbrot web server at http://localhost:3000
 func main() {
+	webAddress := "localhost:3000"
+	log.Printf("Webserver starting at address: http://%s", webAddress)
 	http.HandleFunc("/", handler)
-	log.Fatal(http.ListenAndServe("localhost:3000", nil))
+	log.Fatal(http.ListenAndServe(webAddress, nil))
 }
 
 // Response handler
