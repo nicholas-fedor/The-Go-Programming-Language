@@ -1,0 +1,63 @@
+Copied solution from https://github.com/torbiak/gopl/blob/master/ex3.8/main.go
+
+Benchmark Results:
+
+bigFloat:
+Running tool: /usr/local/go/bin/go test -benchmem -run=^$ -bench ^BenchmarkMandelbrotBigFloat$ gopl.io/exercises/ch3/3.8/bigFloat
+
+goos: linux
+goarch: amd64
+pkg: gopl.io/exercises/ch3/3.8/bigFloat
+cpu: AMD Ryzen Threadripper 2950X 16-Core Processor
+BenchmarkMandelbrotBigFloat
+BenchmarkMandelbrotBigFloat-32           2197272               545.9 ns/op            296 B/op         12 allocs/op
+PASS
+ok      gopl.io/exercises/ch3/3.8/bigFloat      1.763s
+
+
+> Test run finished at 11/11/2022, 3:49:32 PM <
+
+bigRat:
+Running tool: /usr/local/go/bin/go test -benchmem -run=^$ -bench ^BenchmarkMandelbrotRat$ gopl.io/exercises/ch3/3.8/bigRat
+
+goos: linux
+goarch: amd64
+pkg: gopl.io/exercises/ch3/3.8/bigRat
+cpu: AMD Ryzen Threadripper 2950X 16-Core Processor
+BenchmarkMandelbrotRat
+BenchmarkMandelbrotRat-32         580197              1946 ns/op     992 B/op          43 allocs/op
+PASS
+ok      gopl.io/exercises/ch3/3.8/bigRat        1.161s
+
+
+> Test run finished at 11/11/2022, 3:50:06 PM <
+
+complex128:
+
+Running tool: /usr/local/go/bin/go test -benchmem -run=^$ -bench ^BenchmarkMandelbrotComplex128$ gopl.io/exercises/ch3/3.8/complex128
+
+goos: linux
+goarch: amd64
+pkg: gopl.io/exercises/ch3/3.8/complex128
+cpu: AMD Ryzen Threadripper 2950X 16-Core Processor
+BenchmarkMandelbrotComplex128
+BenchmarkMandelbrotComplex128-32        142174984                8.520 ns/op            0 B/op          0 allocs/op
+PASS
+ok      gopl.io/exercises/ch3/3.8/complex128    2.077s
+
+
+> Test run finished at 11/11/2022, 3:50:28 PM <
+
+Running tool: /usr/local/go/bin/go test -benchmem -run=^$ -bench ^BenchmarkMandelbrotComplex64$ gopl.io/exercises/ch3/3.8/complex64
+
+goos: linux
+goarch: amd64
+pkg: gopl.io/exercises/ch3/3.8/complex64
+cpu: AMD Ryzen Threadripper 2950X 16-Core Processor
+BenchmarkMandelbrotComplex64
+BenchmarkMandelbrotComplex64-32         100000000               10.50 ns/op             0 B/op          0 allocs/op
+PASS
+ok      gopl.io/exercises/ch3/3.8/complex64     1.073s
+
+
+> Test run finished at 11/11/2022, 3:50:36 PM <
