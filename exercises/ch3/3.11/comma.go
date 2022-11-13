@@ -5,10 +5,15 @@
 // Enhance comma so that it deals correctly with
 // floating-point numbers and an optional sign.
 
-// Comma takes a floating point value and adds commas.
+// Development notes: 
+// This could be optimized by taking the input as a string instead.
+// The primary difference in this approach is using the math-related functions for
+// validation, int/mantissa splitting, and sign identification.
+// 
+// The sign can be also identified using the strings.HasPrefix function.
+
+// Comma takes a floating point input value and adds commas.
 // Outputs as a string value.
-// Development note: There are several type conversions
-// and this program could be optimized.
 package main
 
 import (
@@ -22,7 +27,7 @@ import (
 func main() {
 
 	// %f will round to precision 6
-	float := -100000.50
+	float := 100000.50
 	fmt.Println(comma(float))
 }
 
@@ -51,48 +56,52 @@ func comma(f float64) string {
 		// Convert inputIntF to integer type.
 		inputIntI = int(inputIntF)
 
-		// Remove negatives from inputIntI and inputFloat and save sign
+		// Sign handling if true, i.e. negative value.
 		if math.Signbit(f) {
+			// Update sign variable
 			sign = "-"
+			// Remove negatives from inputIntI and inputFloat
 			inputIntI = inputIntI * -1
 			inputFloat = inputFloat * -1
+			// Write sign to buffer.
+			buf.WriteString(sign) // "-"
 		}
 
-		// Write sign to buffer.
-		buf.WriteString(sign) // "-"
-
-		// Handle commas similar to 3.10
 		// Convert inputIntI to type string.
 		inputIntS = strconv.Itoa(inputIntI)
+		
+		// Handle commas similar to exercise 3.10
 		n := len(inputIntS)
 
 		switch {
 		case n <= 3:
 			fmt.Fprint(&buf, inputIntS)
+		
 		case n > 3:
 			commaPosition := len(inputIntS) % 3
 
 			if commaPosition == 0 {
 				commaPosition = 3
 			}
+			
 			outputInt = inputIntS[:commaPosition]
+			
 			for i := commaPosition; i < len(inputIntS); i += 3 {
 				outputInt += ","
 				outputInt += inputIntS[i : i+3]
 			}
 		}
-
 	}
 
-	// Convert inputFloat to string and trim "0." prefix.
+	// Convert inputFloat to string.
+	// %g = exponent as needed, necessary digits only
 	outputFloat = fmt.Sprintf("%g", inputFloat)
+	// Trim "0." prefix
 	outputFloat = strings.TrimPrefix(outputFloat, "0.")
 
-	// Write both parts to buffer
+	// Write both parts to buffer with decimal separator.
 	fmt.Fprintf(&buf, "%s.", outputInt)    // 1000.
 	fmt.Fprintf(&buf, "%s\n", outputFloat) // 499999
-
-	// Current Output: -1000.499999
 
 	// Return string to main
 	return buf.String()
