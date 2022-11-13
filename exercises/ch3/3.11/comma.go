@@ -61,7 +61,7 @@ func comma(f float64) string {
 		// Write sign to buffer.
 		buf.WriteString(sign) // "-"
 
-		// Handle commas
+		// Handle commas similar to 3.10
 		// Convert inputIntI to type string.
 		inputIntS = strconv.Itoa(inputIntI)
 		n := len(inputIntS)
