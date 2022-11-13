@@ -30,9 +30,7 @@ import (
 )
 
 func main() {
-
-	// %f will round to precision 6
-	float := 100000.50
+	float := -100000.50
 	fmt.Println(comma(float))
 }
 
