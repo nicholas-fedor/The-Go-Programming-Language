@@ -5,12 +5,17 @@
 // Enhance comma so that it deals correctly with
 // floating-point numbers and an optional sign.
 
-// Development notes: 
+// Development notes:
 // This could be optimized by taking the input as a string instead.
 // The primary difference in this approach is using the math-related functions for
 // validation, int/mantissa splitting, and sign identification.
-// 
+//
 // The sign can be also identified using the strings.HasPrefix function.
+
+// Other solutions:
+// https://github.com/kdama/gopl/blob/master/ch03/ex11/main.go
+// https://github.com/Julineo/golang1training/blob/master/3/3.11/main.go
+// https://github.com/torbiak/gopl/blob/master/ex3.11/main.go
 
 // Comma takes a floating point input value and adds commas.
 // Outputs as a string value.
@@ -69,23 +74,23 @@ func comma(f float64) string {
 
 		// Convert inputIntI to type string.
 		inputIntS = strconv.Itoa(inputIntI)
-		
+
 		// Handle commas similar to exercise 3.10
 		n := len(inputIntS)
 
 		switch {
 		case n <= 3:
 			fmt.Fprint(&buf, inputIntS)
-		
+
 		case n > 3:
 			commaPosition := len(inputIntS) % 3
 
 			if commaPosition == 0 {
 				commaPosition = 3
 			}
-			
+
 			outputInt = inputIntS[:commaPosition]
-			
+
 			for i := commaPosition; i < len(inputIntS); i += 3 {
 				outputInt += ","
 				outputInt += inputIntS[i : i+3]
