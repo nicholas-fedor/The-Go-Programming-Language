@@ -6,6 +6,10 @@
 // Allow the client to specify the x, y, and zoom values as parameters to the HTTP request.
 
 // Mandelbrot emits a PNG image of the Mandelbrot fractal to a web server.
+// In this current iteration, the x, y, and zoom values will stretch and skew the mandelbrot fractal image.
+// This is far from a perfect implementation, but will allow the user to see the image with the default values,
+// if no input is provided.
+// To keep things simple, I opted to limit user inputs to single x, y variables, instead of xMin/xMax and yMin/yMax.
 package main
 
 import (
@@ -29,65 +33,108 @@ func main() {
 }
 
 func handler(w http.ResponseWriter, r *http.Request) {
-	// Loads URL form requests.
-	// Error handling for bad user inputs.
+	// Takes user's URL request.
+	// i.e. http://localhost:3000/?x=4&y=4&zoom=100
+	// If the request is malformed, it will respond with the error.
 	if err := r.ParseForm(); err != nil {
 		http.Error(w, err.Error(), http.StatusBadRequest)
 		return
 	}
 
-	// Request values are strings.
-	// If omitted by user, defaults to "0".
+	// Setting defaults to string "0" if any form value is missing.
 	xRequest := r.FormValue("x")
 	if xRequest == "" {
 		xRequest = "0"
 	}
+
 	yRequest := r.FormValue("y")
 	if yRequest == "" {
 		yRequest = "0"
 	}
+
 	zoomRequest := r.FormValue("zoom")
 	if zoomRequest == "" {
 		zoomRequest = "0"
 	}
 
-	// String conversion to int.
-	// Error handling for bad user inputs.
-	xValue, err := strconv.Atoi(xRequest)
-	if err != nil {
-		http.Error(w, err.Error(), http.StatusBadRequest)
-		return
-	}
-	yValue, err := strconv.Atoi(yRequest)
-	if err != nil {
-		http.Error(w, err.Error(), http.StatusBadRequest)
-		return
-	}
-	zoomValue, err := strconv.Atoi(zoomRequest)
+	// Parsing into Float64 allows for requests to include
+	// values with negative numbers and decimals.
+	// Malformed values will respond with the error.
+	xValue, err := strconv.ParseFloat(xRequest, 64)
 	if err != nil {
 		http.Error(w, err.Error(), http.StatusBadRequest)
 		return
 	}
 
-	// Calls for fractal PNG.
+	yValue, err := strconv.ParseFloat(yRequest, 64)
+	if err != nil {
+		http.Error(w, err.Error(), http.StatusBadRequest)
+		return
+	}
+
+	zoomValue, err := strconv.ParseFloat(zoomRequest, 64)
+	if err != nil {
+		http.Error(w, err.Error(), http.StatusBadRequest)
+		return
+	}
+
+	// Sanity check via printing out the requests in the terminal.
+	log.Printf("xRequest: %f, yRequest: %f, zoomRequest: %f", xValue, yValue, zoomValue)
+
+	// Passing the values to the renderer.
 	renderFractal(w, xValue, yValue, zoomValue)
 }
 
-func renderFractal(w http.ResponseWriter, xValue, yValue, zoomValue int) {
+func renderFractal(w http.ResponseWriter, xValue, yValue, zoomValue float64) {
 	const (
-		xMin, yMin, xMax, yMax = -2, -2, 2, 2
-		width, height          = 1024, 1024
+		width, height = 1024, 1024
+		yMax, yMin    = 2, -2
+		xMax, xMin    = 2, -2
 	)
 
-	img := image.NewRGBA(image.Rect(0, 0, width, height))
-	for py := 0; py < height; py++ {
-		y := float64(py)/height*(yMax-yMin) + yMin
-		for px := 0; px < width; px++ {
-			x := float64(px)/width*(xMax-xMin) + xMin
-			z := complex(x, y)
-			img.Set(px, py, mandelbrot(z))
+	// Initialized variables outside of the loops for sanity.
+	var px, py float64
+	var x, y float64
+	var z complex128
+
+	// Initializing rect object outside of img.NewRGBA for sanity.
+	rect := image.Rect(0, 0, width, height)
+	img := image.NewRGBA(rect)
+
+	// Main rendering loop.
+	for py = 0; py < height; py++ {
+		// Uses default yMax and yMin if yValue is 0.
+		// This can be improved, as prevents user from using 0.
+		if yValue == 0 {
+			y = py/height*(yMax-yMin) + yMin
+		} else {
+			y = py/height*(yValue*2) + (yValue * -1)
+		}
+
+		for px = 0; px < width; px++ {
+			// Uses default xMax and xMin if xValue is 0.
+			// This can be improved, as prevents user from using 0.
+			if xValue == 0 {
+				x = px/width*(xMax-xMin) + xMin
+			} else {
+				x = px/width*(xValue*2) + (xValue * -1)
+			}
+
+			// If zoomValue omitted, then zoomValue variable not used in
+			// calculating z.
+			if zoomValue == 0 {
+				z = complex(x, y)
+			} else {
+				// Otherwise, both x and y are scaled.
+				// value + (value * zoomValue%)
+				// If zoomValue is negative, then will reduce overall value.
+				z = complex(x+x*(zoomValue/100), y+y*(zoomValue/100))
+			}
+
+			img.Set(int(px), int(py), mandelbrot(z))
 		}
 	}
+
 	err := png.Encode(w, img)
 	if err != nil {
 		http.Error(w, err.Error(), http.StatusInternalServerError)
