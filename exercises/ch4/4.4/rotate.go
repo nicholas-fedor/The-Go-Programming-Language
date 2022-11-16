@@ -11,23 +11,17 @@
 // https://gosamples.dev/generics-slice-contains/
 
 // Rotate rotates a slice left by n elements.
-// Example:
+// Example: Left Rotate (i.e. array elements shifted left and )
 // input  = [0, 1, 2, 3, 4, 5]
 // output = [2, 3, 4, 5, 0, 1]
 package main
 
 import "fmt"
 
-func Rotate[T comparable](s[] T) {
-	first := 0
-	last := len(s) - 1
-
-	for first < last {
-		s[first], s[last] = s[last], s[first]
-		first++
-		last--
-	}
-
+// Rotates left two elements.
+func Rotate[T comparable](s []T) {
+	t := s[:2]
+	s = append(s[2:], t...)
 	fmt.Println(s)
 }
 
@@ -36,7 +30,10 @@ func main() {
 	fmt.Println(input)
 
 	// TODO:
-	// Still need to figure out algorithm that 
+	// Still need to figure out algorithm that
 	// conforms to the exercise requirements.
 	Rotate(input[:])
 }
+
+// Output: 
+// [2 3 4 5 0 1]
