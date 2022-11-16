@@ -4,6 +4,12 @@
 // Prompt:
 // Write a version of rotate that operates in a single pass.
 
+// Development Notes:
+// https://www.geeksforgeeks.org/c-program-cyclically-rotate-array-one/
+// Tried a few different iterations to get the type generics for slices to work.
+// The article below helped to resolve all the issues that I was having.
+// https://gosamples.dev/generics-slice-contains/
+
 // Rotate rotates a slice left by n elements.
 // Example:
 // input  = [0, 1, 2, 3, 4, 5]
