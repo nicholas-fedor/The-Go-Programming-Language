@@ -7,6 +7,10 @@
 // UTF-8 encoded string, in place. 
 // Can you do it without allocating new memory?
 
+// Development notes:
+// Minimization of memory allocation.
+// * minimize the amount of variable allocations.
+
 package main
 
 import "fmt"
