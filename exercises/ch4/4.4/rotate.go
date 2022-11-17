@@ -28,12 +28,11 @@ func Rotate[T comparable](s []T) {
 func main() {
 	input := [...]int{0, 1, 2, 3, 4, 5}
 	fmt.Println(input)
-
-	// TODO:
-	// Still need to figure out algorithm that
-	// conforms to the exercise requirements.
 	Rotate(input[:])
 }
+
+// Input: 
+// [0 1 2 3 4 5]
 
 // Output: 
 // [2 3 4 5 0 1]
