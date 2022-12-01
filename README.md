@@ -14,6 +14,7 @@ Code examples from the book.
 
 ## Exercise Solutions
 
+<https://github.com/linehk/gopl>
 <https://github.com/torbiak/gopl>  
 <https://github.com/Julineo/golang1training/>  
 <https://github.com/kdama/gopl>  

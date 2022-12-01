@@ -1,6 +1,7 @@
 // see pg 97
 
 // Charcount computes counts of Unicode characters.
+// Usage: echo "hello" | go run main.go 
 package main
 
 import (
