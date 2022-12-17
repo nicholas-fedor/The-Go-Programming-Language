@@ -3,8 +3,8 @@ package github
 import (
 	"encoding/json"
 	"fmt"
-	"net/url"
 	"net/http"
+	"net/url"
 	"strings"
 	"time"
 )
@@ -23,7 +23,7 @@ type Issue struct {
 	State     string
 	User      *User
 	CreatedAt time.Time `json:"created_at"`
-	Body      string
+	Body      string    // in Markdown format
 }
 
 type User struct {
@@ -31,17 +31,19 @@ type User struct {
 	HTMLURL string `json:"html_url"`
 }
 
-// SearchIssues queries the GitHub issue tracker.
+// SearchIssues queries the GitHub search issues api and 
+// returns either the IssuesSearchResult or an error.
 func SearchIssues(terms []string) (*IssuesSearchResult, error) {
 	q := url.QueryEscape(strings.Join(terms, " "))
-	resp, err := http.Get(IssuesURL + "?q=" + q)
+	resp, err := http.Get(IssuesURL + "?q="+ q)
 	if err != nil {
 		return nil, err
 	}
+	defer resp.Body.Close()
 
 	if resp.StatusCode != http.StatusOK {
 		resp.Body.Close()
-		return nil, fmt.Errorf("search query failed: %s", resp.Status)
+		return nil, fmt.Errorf("query failed: %s", resp.Status)
 	}
 
 	var result IssuesSearchResult
@@ -49,6 +51,6 @@ func SearchIssues(terms []string) (*IssuesSearchResult, error) {
 		resp.Body.Close()
 		return nil, err
 	}
-	resp.Body.Close()
+
 	return &result, nil
 }
