@@ -8,13 +8,16 @@ import (
 	"strings"
 )
 
-const URL = ""
+const URL = "https://api.github.com/"
 
 // ReadIssue requests a specific issue and
 // prints out more detailed information.
+// https://docs.github.com/en/rest/issues/issues?apiVersion=2022-11-28#get-an-issue
 func ReadIssue(terms []string) (*IssueReadResult, error) {
+	// Request /repos/{owner}/{repo}/issues/{issue_number}
 	q := url.QueryEscape(strings.Join(terms, " "))
-	resp, err := http.Get(URL + "?q=" + q)
+	fmt.Println(url.QueryUnescape(q))
+	resp, err := http.Get(URL + q)
 	if err != nil {
 		return nil, err
 	}

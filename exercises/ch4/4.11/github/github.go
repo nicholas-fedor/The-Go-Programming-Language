@@ -2,12 +2,25 @@ package github
 
 import "time"
 
-type IssuesSearchResult struct {
-	TotalCount int `json:"total_count"`
-	Items      []*Issue
+type IssueReadRequest struct {
+	Owner       string
+	Repo        string
+	IssueNumber int
 }
 
 type IssueReadResult struct {
+	Number    int
+	HTMLURL   string `json:"html_url"`
+	State     string
+	Title     string
+	User      *User
+	CreatedAt time.Time `json:"created_at"`
+	Body      string
+}
+
+type IssuesSearchResult struct {
+	TotalCount int `json:"total_count"`
+	Items      []*Issue
 }
 
 type Issue struct {
