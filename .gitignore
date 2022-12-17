@@ -2,3 +2,5 @@
 *.gif
 exercises/ch1/1.11/links.txt
 exercises/ch4/4.9/input.txt
+exercises/ch4/4.11/Dev Resources/getIssueResponseSchema.json
+exercises/ch4/4.11/Dev Resources/searchIssuesResponseSchema.json
