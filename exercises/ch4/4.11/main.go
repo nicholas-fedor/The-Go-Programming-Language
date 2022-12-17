@@ -40,30 +40,30 @@ func main() {
 		for _, item := range result.Items {
 			log.Printf("#%-5d %9.9s %.55s\n", item.Number, item.User.Login, item.Title)
 		}
-	
+
 	case "create":
 		// Dev output
 		log.Println("Created")
-		
+
 	case "read":
 		// Dev output
 		log.Println("Read")
-		
+
 	case "update":
 		// Dev output
 		log.Println("Updated")
-		
+
 	case "close":
 		// Dev output
 		log.Println("Closed")
-		
+
 	default:
 		// Dev output
 		help()
 	}
 
 	// Functions by command-line argument:
-	// 
+	//
 	// Search issues GitHub api get request.
 	// // Argument[1] = search
 	//
@@ -80,7 +80,6 @@ func main() {
 	// Argument[1] = close
 	//
 
-
 	// Output: Response from GitHub API request.
 
 }
@@ -88,7 +87,7 @@ func main() {
 // help log.Printf() and os.Exit(1) basic listing of commands and their usage.
 func help() {
 	log.Fatalf("\nProgram usage:\nTerminal Command: go run main.go search repo:golang/go is:open json decoder\n")
-	
+
 }
 
 // Example Usage:

@@ -6,36 +6,15 @@ import (
 	"net/http"
 	"net/url"
 	"strings"
-	"time"
 )
 
 const IssuesURL = "https://api.github.com/search/issues"
 
-type IssuesSearchResult struct {
-	TotalCount int `json:"total_count"`
-	Items      []*Issue
-}
-
-type Issue struct {
-	Number    int
-	HTMLURL   string `json:"html_url"`
-	Title     string
-	State     string
-	User      *User
-	CreatedAt time.Time `json:"created_at"`
-	Body      string    // in Markdown format
-}
-
-type User struct {
-	Login   string
-	HTMLURL string `json:"html_url"`
-}
-
-// SearchIssues queries the GitHub search issues api and 
+// SearchIssues queries the GitHub search issues api and
 // returns either the IssuesSearchResult or an error.
 func SearchIssues(terms []string) (*IssuesSearchResult, error) {
 	q := url.QueryEscape(strings.Join(terms, " "))
-	resp, err := http.Get(IssuesURL + "?q="+ q)
+	resp, err := http.Get(IssuesURL + "?q=" + q)
 	if err != nil {
 		return nil, err
 	}
