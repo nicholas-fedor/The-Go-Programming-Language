@@ -53,15 +53,7 @@ func main() {
 	case "search":
 		// Dev ouput
 		log.Println("Search Selected")
-
-		result, err := github.SearchIssues(os.Args[2:])
-		if err != nil {
-			log.Fatal(err)
-		}
-		log.Printf("Found %d issues:\n", result.TotalCount)
-		for _, item := range result.Items {
-			log.Printf("#%-5d %9.9s %.55s\n", item.Number, item.User.Login, item.Title)
-		}
+		search()
 
 		// Create issue GitHub api post request.
 		// Argument[1] = create
@@ -102,5 +94,17 @@ func main() {
 // help log.Printf() and os.Exit(1) basic listing of commands and their usage.
 func help() {
 	log.Fatalf("\nProgram usage:\nTerminal Command: go run main.go search repo:golang/go is:open json decoder\n")
+}
 
+// search takes one or more arguments and log.Printf's the results.
+// Example usage: go run main.go search repo:golang/go is:open json decoder
+func search()  {
+	result, err := github.SearchIssues(os.Args[2:])
+		if err != nil {
+			log.Fatal(err)
+		}
+		log.Printf("Found %d issues:\n", result.TotalCount)
+		for _, item := range result.Items {
+			log.Printf("#%-5d %9.9s %.55s\n", item.Number, item.User.Login, item.Title)
+		}
 }
