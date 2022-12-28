@@ -6,8 +6,6 @@ import (
 	"net/http"
 )
 
-const URL = "https://api.github.com/"
-
 // ReadIssue requests a specific issue and
 // prints out more detailed information.
 // https://docs.github.com/en/rest/issues/issues?apiVersion=2022-11-28#get-an-issue

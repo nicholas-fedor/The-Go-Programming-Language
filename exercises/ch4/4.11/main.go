@@ -57,9 +57,9 @@ func main() {
 			// Create issue GitHub api post request.
 			// Argument[1] = create
 		case "create":
-
 			// Dev output
 			log.Println("Created Selected")
+			create()
 
 			// Read issue GitHub api get request.
 			// Argument[1] = read
@@ -73,12 +73,14 @@ func main() {
 		case "update":
 			// Dev output
 			log.Println("Update Selected")
+			update()
 
 			// Close issue GitHub api get request.
 			// Argument[1] = close
 		case "close":
 			// Dev output
 			log.Println("Close Selected")
+			os.Exit(1)
 
 		default:
 			help()
@@ -110,7 +112,7 @@ func search() {
 func read() {
 	input := os.Args[2]
 	log.Printf("API Query: %s", input)
-
+	
 	result, err := github.ReadIssue(os.Args[2])
 	if err != nil {
 		log.Fatal(err)
@@ -118,4 +120,19 @@ func read() {
 	log.Printf("url: %s | #%-5d | status: %s\n", result.HTMLURL, result.Number, result.State)
 	log.Printf("Title: %s\n", result.Title)
 	log.Printf("Content:\n%v\n", result.Body)
+}
+
+// create
+// Example usage: go run main.go create owner:golang repo:go title: 
+func create() {
+	input := os.Args[2:]
+	log.Printf("API Query: %s", input)
+	// TODO: Implement API call
+}
+
+// update
+func update() {
+	input := os.Args[2:]
+	log.Printf("API Query: %s", input)
+	// TODO: Implement API call
 }

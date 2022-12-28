@@ -2,13 +2,32 @@ package github
 
 import "time"
 
+const URL = "https://api.github.com/"
+
 type IssueReadRequest struct {
 	Owner       string
 	Repo        string
 	IssueNumber int
 }
 
+type IssueCreateResult struct {
+	Owner   string
+	Repo    string
+	Title   string
+	HTMLURL string `json:"html_url"`
+}
+
 type IssueReadResult struct {
+	Number    int
+	HTMLURL   string `json:"html_url"`
+	State     string
+	Title     string
+	User      *User
+	CreatedAt time.Time `json:"created_at"`
+	Body      string
+}
+
+type IssueUpdateResult struct {
 	Number    int
 	HTMLURL   string `json:"html_url"`
 	State     string
