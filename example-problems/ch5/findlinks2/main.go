@@ -15,7 +15,8 @@ import (
 	"golang.org/x/net/html"
 )
 
-// visit appends to links each link found in n, and returns the result.
+// visit appends to links each link found in n, and returns 
+// the result.
 func visit(links []string, n *html.Node) []string {
 	if n.Type == html.ElementNode && n.Data == "a" {
 		for _, a := range n.Attr {
@@ -43,8 +44,8 @@ func main() {
 	}
 }
 
-// findLinks performans an HTTP GET request for url, parses the
-// response as HTML, and extracts and returns the links.
+// findLinks performans an HTTP GET request for url, parses 
+// the response as HTML, and extracts and returns the links.
 func findLinks(url string) ([]string, error) {
 	resp, err := http.Get(url)
 	if err != nil {

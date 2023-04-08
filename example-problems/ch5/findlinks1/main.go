@@ -1,6 +1,7 @@
 // see page 122
 
-// Findlinks1 prints the links in an HTML document read from standard input.
+// Findlinks1 prints the links in an HTML document read 
+// from standard input.
 package main
 
 import (
@@ -21,7 +22,8 @@ func main() {
 	}
 }
 
-// visit appends to links for each link found in n and returns the result.
+// visit appends to links for each link found in n and 
+// returns the result.
 func visit(links []string, n *html.Node) []string {
 	if n.Type == html.ElementNode && n.Data == "a" {
 		for _, a := range n.Attr {
